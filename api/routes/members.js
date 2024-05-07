@@ -10,11 +10,16 @@ router.get('/', (req, res, next) => {
 
 // POST request for /members route, status 201 meaning - successful creation
 router.post('/', (req, res, next) => {
+    const member = {
+        memberId: req.body.memberId,
+        name: req.body.name,
+        email: req.body.email
+    }
     res.status(201).json({
-        message: 'Member added successfully'
+        message: 'Member added successfully',
+        member: member
     })
 })
-
 
 router.get('/:memberId', (req, res, next) => {
     res.status(200).json({

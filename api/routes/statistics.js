@@ -8,12 +8,23 @@ router.get('/', (req, res, next) => {
     })
 })
 
-// POST request endpoint for /statistics
+// POST request endpoint for /statistics - status 201 means successful creation
 router.post('/', (req, res, next) => {
+    const statistic = {
+        title: req.body.title,
+        content: req.body.content,
+        date: req.body.date,
+        type: req.body.type,
+        // e.g. improvement or regression (compared to previous year maybe?)
+        comparison: req.body.comparison,
+        deaths: req.body.deaths
+    }
     res.status(201).json({
-        message: 'Handling POST requests to /statistics'
+        message: 'Handling POST requests to /statistics',
+        createdStatistic: statistic
     })
 })
+
 
 // GET request by ID
 router.get('/:statisticId', (req, res, next) => {
