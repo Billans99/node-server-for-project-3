@@ -3,6 +3,10 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 
+// connection string from mongoDB atlas??
+/*
+mongodb+srv://Billans1:Admiralb99@mens-mental-health-node.e4sf8i0.mongodb.net/?retryWrites=true&w=majority&appName=mens-mental-health-node
+*/
 
 const statisticRoutes = require('./api/routes/statistics')
 const memberRoutes = require('./api/routes/members')
@@ -23,6 +27,7 @@ app.use((req, res, next) => {
         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
         return res.status(200).json({})
     }   
+    next()
 })
 
 // Routes which should handle requests
