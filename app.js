@@ -2,14 +2,12 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
-
-// connection string from mongoDB atlas??
-/*
-mongodb+srv://Billans1:Admiralb99@mens-mental-health-node.e4sf8i0.mongodb.net/?retryWrites=true&w=majority&appName=mens-mental-health-node
-*/
+const mongoose = require('mongoose')
 
 const statisticRoutes = require('./api/routes/statistics')
 const memberRoutes = require('./api/routes/members')
+
+mongoose.connect('mongodb+srv://Billans1:' + process.env.REACT_APP_MONGOATLAS_KEY + '@mens-mental-health-node.e4sf8i0.mongodb.net/?retryWrites=true&w=majority&appName=mens-mental-health-node')
 
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended: false}))
