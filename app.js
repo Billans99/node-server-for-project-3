@@ -3,6 +3,7 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
 const statisticRoutes = require('./api/routes/statistics')
 const memberRoutes = require('./api/routes/members')
