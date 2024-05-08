@@ -1,12 +1,2 @@
 node_modules
-
-
-connection string from mongoDB atlas??
-
-mongodb+srv://Billans1:Admiralb99@mens-mental-health-node.e4sf8i0.mongodb.net/?retryWrites=true&w=majority&appName=mens-mental-health-node
-
-
-connection string from mongoDB atlas??
-
-mongodb+srv://Billans1:<password>@mens-mental-health-node.e4sf8i0.mongodb.net/
- 
+.env
