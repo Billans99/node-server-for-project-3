@@ -6,8 +6,17 @@ const Statistic = require('../models/statistic')
 
 // GET request endpoint for /statistics
 router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling GET requests to /statistics'
+    Statistic.find()
+    .exec()
+    .then(docs => {
+        console.log(docs)
+        res.status(200).json(docs)
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({
+            error: error
+        })
     })
 })
 
@@ -22,30 +31,49 @@ router.post('/', (req, res, next) => {
         comparison: req.body.comparison,
         deaths: req.body.deaths
     })
-    statistic.save().then(result => {
+    statistic
+        .save()
+        .then(result => {
         console.log(result)
+        res.status(201).json({
+            message: 'Handling POST requests to /statistics',
+            createdStatistic: statistic
+        })
     })
-    .catch(error => console.log(error))
-    res.status(201).json({
-        message: 'Handling POST requests to /statistics',
-        createdStatistic: statistic
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({
+            error: error
+        })
     })
 })
 
 
 // GET request by ID
+// If the ID is found, return the document with status 200
+// If the ID is not found, return a message with status 404
+// If there is an error, return the error with status 500
 router.get('/:statisticId', (req, res, next) => {
     const id = req.params.statisticId
-    if (id === 'special') {
-        res.status(200).json({
-            message: 'You discovered the special ID',
-            id: id
+    Statistic.findById(id)
+    .exec()
+    .then(doc => {
+        console.log('From database', doc)
+        if (doc) {
+            res.status(200).json(doc)
+        } else {
+            res.status(404).json({
+                message: 'No valid entry found for provided ID'
+            })
+        }
+        res.status(200).json({doc})
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({
+            error: error
         })
-    } else {
-        res.status(200).json({
-            message: 'You passed an ID'
-        })
-    }
+    })
 })
 
 // PATCH request by ID with message returned as JSON "Updated Statistics"
