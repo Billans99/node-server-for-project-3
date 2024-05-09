@@ -1,5 +1,8 @@
 const express = require('express')
 const router = express.Router()
+const mongoose = require('mongoose')
+
+const Statistic = require('../models/statistic')
 
 // GET request endpoint for /statistics
 router.get('/', (req, res, next) => {
@@ -10,15 +13,19 @@ router.get('/', (req, res, next) => {
 
 // POST request endpoint for /statistics - status 201 means successful creation
 router.post('/', (req, res, next) => {
-    const statistic = {
+    const statistic = new Statistic({
+        _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
         content: req.body.content,
         date: req.body.date,
         type: req.body.type,
-        // e.g. improvement or regression (compared to previous year maybe?)
         comparison: req.body.comparison,
         deaths: req.body.deaths
-    }
+    })
+    statistic.save().then(result => {
+        console.log(result)
+    })
+    .catch(error => console.log(error))
     res.status(201).json({
         message: 'Handling POST requests to /statistics',
         createdStatistic: statistic

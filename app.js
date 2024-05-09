@@ -3,7 +3,7 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const mongoose = require('mongoose')
+
 
 const statisticRoutes = require('./api/routes/statistics')
 const memberRoutes = require('./api/routes/members')
@@ -11,9 +11,9 @@ const memberRoutes = require('./api/routes/members')
 mongoose.connect(
     'mongodb+srv://Billans1:' + 
     process.env.REACT_APP_MONGOATLAS_PW + 
-    '@mens-mental-health-node.e4sf8i0.mongodb.net/?retryWrites=true&w=majority&appName=mens-mental-health-node', 
+    '@mens-mental-health-node.e4sf8i0.mongodb.net/',
 {
-    useMongoClient: true
+    
 })
 
 app.use(morgan('dev'))
