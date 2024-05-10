@@ -86,9 +86,19 @@ router.patch('/:statisticId', (req, res, next) => {
 
 // DELETE request by ID with message returned as JSON "Deleted Statistics"
 // colon (:) after /statistics is a dynamic parameter
+// .exec() is to create a promise
 router.delete('/:statisticId', (req, res, next) => {
-    res.status(200).json({
-        message: 'Deleted statistic!'
+    const id = req.params.statisticId
+    Statistic.remove({ _id: id })
+    .exec()
+    .then(result => {
+        res.status(200).json(result)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
     })
 })
 
