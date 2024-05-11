@@ -89,15 +89,15 @@ router.patch('/:statisticId', (req, res, next) => {
 // .exec() is to create a promise
 router.delete('/:statisticId', (req, res, next) => {
     const id = req.params.statisticId
-    Statistic.remove({ _id: id })
+    Statistic.deleteOne({ _id: id })
     .exec()
     .then(result => {
         res.status(200).json(result)
     })
-    .catch(err => {
-        console.log(err)
+    .catch(error => {
+        console.log(error)
         res.status(500).json({
-            error: err
+            error: error
         })
     })
 })
