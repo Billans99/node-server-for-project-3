@@ -5,12 +5,17 @@ const mongoose = require('mongoose')
 const Statistic = require('../models/statistic')
 
 // GET request endpoint for /statistics
+// GET request to /statistics will now return all statistics, and a count of number of statistics
 router.get('/', (req, res, next) => {
     Statistic.find()
+    .select('_id title content date type comparison deaths')
     .exec()
     .then(docs => {
-        console.log(docs)
-        res.status(200).json(docs)
+        const response = {
+            count: docs.length,
+            statistics: docs
+        }
+        res.status(200).json(response)
     })
     .catch(err => {
         console.log(err)
