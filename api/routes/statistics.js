@@ -56,8 +56,20 @@ router.post('/', (req, res, next) => {
         .then(result => {
         console.log(result)
         res.status(201).json({
-            message: 'Handling POST requests to /statistics',
-            createdStatistic: statistic
+            message: 'Created statistic successfully',
+            createdStatistic: {
+                title: result.title,
+                content: result.content,
+                date: result.date,
+                type: result.type,
+                comparison: result.comparison,
+                deaths: result.deaths,
+                _id: result._id,
+                request: {
+                    type: 'GET',
+                    url: 'http://localhost:3000/statistics/' + result._id
+                }
+            }
         })
     })
     .catch(err => {
