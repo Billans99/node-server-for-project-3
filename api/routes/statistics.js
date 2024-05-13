@@ -88,6 +88,7 @@ router.post('/', (req, res, next) => {
 router.get('/:statisticId', (req, res, next) => {
     const id = req.params.statisticId
     Statistic.findById(id)
+    .select('-__v')
     .exec()
     .then(doc => {
         console.log('From database', doc)
