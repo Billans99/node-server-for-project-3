@@ -6,14 +6,29 @@ const Statistic = require('../models/statistic')
 
 // GET request endpoint for /statistics
 // GET request to /statistics will now return all statistics, and a count of number of statistics
+// Provide meta information about the request (type, url, for more information about the object)
 router.get('/', (req, res, next) => {
     Statistic.find()
-    .select('_id title content date type comparison deaths')
+    .select('-__v')
     .exec()
     .then(docs => {
         const response = {
             count: docs.length,
-            statistics: docs
+            statistics: docs.map(doc => {
+                return {
+                    _id: doc._id,
+                    title: doc.title,
+                    content: doc.content,
+                    date: doc.date,
+                    type: doc.type,
+                    comparison: doc.comparison,
+                    deaths: doc.deaths,
+                    request: {
+                        type: 'GET',
+                        url: 'http://localhost:3000/statistics/' + doc._id
+                    }
+                }
+            })
         }
         res.status(200).json(response)
     })
@@ -85,6 +100,14 @@ router.get('/:statisticId', (req, res, next) => {
 // colon (:) after /statistics is a dynamic parameter
 // $set is a keyword in MongoDB to update the fields to the new values
 // Can send different patch requests depending on what needs to be updated
+/* Send patch requests through the following example: 
+[
+    {
+        "propName": "title",
+        "value": "Men's increased anxiety throughout the pandemic"
+    }
+] 
+*/
 router.patch('/:statisticId', (req, res, next) => {
     const id = req.params.statisticId
     const updateOps = {}
